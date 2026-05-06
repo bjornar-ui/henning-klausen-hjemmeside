@@ -16,7 +16,7 @@ if (fs.existsSync(envPath)) {
     if (key && val.length) env[key] = val.join('=');
   });
 }
-const ADMIN_PASSWORD = env.ADMIN_PASSWORD || 'admin';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || env.ADMIN_PASSWORD || 'admin';
 
 // In-memory session tokens (reset on server restart — fine for single user)
 const sessions = new Set();
