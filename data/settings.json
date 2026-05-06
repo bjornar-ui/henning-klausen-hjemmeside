@@ -1,0 +1,16 @@
+{
+  "emailNotifications": true,
+  "notifyEmail": "post@wernerklausen.no",
+  "aiAnalysis": true,
+  "anthropicApiKey": "",
+  "aiCustomInstructions": "",
+  "aiTags": [
+    "Nytt oppdrag",
+    "Eksisterende kunde",
+    "Prisforespørsel",
+    "Rådgivning",
+    "Bytte byrå",
+    "Haster",
+    "Generelt spørsmål"
+  ]
+}

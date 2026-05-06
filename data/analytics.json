@@ -1,0 +1,512 @@
+{
+  "visits": [
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:02:41.277Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 10,
+      "scrollDepth": 50
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:18:04.787Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 5,
+      "scrollDepth": 10
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:20:09.227Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 54,
+      "scrollDepth": 6
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:07.379Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 3,
+      "scrollDepth": 0
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:43.693Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 40,
+      "scrollDepth": 40
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:59.435Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 16,
+      "scrollDepth": 45
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:48.292Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 339,
+      "scrollDepth": 4
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:26:26.861Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 390,
+      "duration": 103,
+      "scrollDepth": 100
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:29:02.642Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 194,
+      "scrollDepth": 100
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:29:45.100Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 42,
+      "scrollDepth": 0
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:30:43.398Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 58,
+      "scrollDepth": 11
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:32:30.581Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 107,
+      "scrollDepth": 8
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:35:04.235Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 390,
+      "duration": 620,
+      "scrollDepth": 100
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:37:39.575Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 414,
+      "duration": 309,
+      "scrollDepth": 77
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:37:27.241Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 2560,
+      "duration": 11563,
+      "scrollDepth": 100
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:33.795Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 2560,
+      "duration": 66,
+      "scrollDepth": 100
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:40:55.933Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 2560,
+      "duration": 209,
+      "scrollDepth": 100
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:42:28.607Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 2560,
+      "duration": 93,
+      "scrollDepth": 100
+    }
+  ],
+  "events": [
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:19:50.530Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 35,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:35.133Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 31,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:35.866Z",
+      "action": "section_view",
+      "section": "Statistikk",
+      "duration": 32,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:36.750Z",
+      "action": "section_view",
+      "section": "Hvorfor oss",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:38.599Z",
+      "action": "section_view",
+      "section": "Tjenester",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:46.883Z",
+      "action": "section_view",
+      "section": "Om oss",
+      "duration": 3,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:50.267Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:52.232Z",
+      "action": "section_view",
+      "section": "Statistikk",
+      "duration": 5,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:54.150Z",
+      "action": "section_view",
+      "section": "Hvorfor oss",
+      "duration": 4,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:24:55.998Z",
+      "action": "section_view",
+      "section": "Tjenester",
+      "duration": 4,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:10.001Z",
+      "action": "section_view",
+      "section": "Om oss",
+      "duration": 15,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:12.516Z",
+      "action": "section_view",
+      "section": "Referanser",
+      "duration": 4,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:14.449Z",
+      "action": "section_view",
+      "section": "Bransjer & Systemer",
+      "duration": 4,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:15.850Z",
+      "action": "section_view",
+      "section": "FAQ",
+      "duration": 3,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:28.050Z",
+      "action": "section_view",
+      "section": "Kontakt",
+      "duration": 13,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:52.184Z",
+      "action": "section_view",
+      "section": "Kontakt",
+      "duration": 7,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:53.110Z",
+      "action": "section_view",
+      "section": "FAQ",
+      "duration": 8,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:25:56.161Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 6,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:27:49.000Z",
+      "action": "section_view",
+      "section": "Om oss",
+      "duration": 112,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:27:57.778Z",
+      "action": "section_view",
+      "section": "Om oss",
+      "duration": 8,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:28:55.516Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 58,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:28:57.449Z",
+      "action": "section_view",
+      "section": "Hvorfor oss",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:29:00.181Z",
+      "action": "section_view",
+      "section": "Om oss",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:30:39.116Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 54,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:30:53.431Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 10,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:32:35.731Z",
+      "action": "section_view",
+      "section": "Statistikk",
+      "duration": 4,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:32:36.914Z",
+      "action": "section_view",
+      "section": "Hvorfor oss",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:32:40.264Z",
+      "action": "section_view",
+      "section": "Tjenester",
+      "duration": 3,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:32:43.697Z",
+      "action": "section_view",
+      "section": "Om oss",
+      "duration": 3,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:32:50.391Z",
+      "action": "section_view",
+      "section": "Om oss",
+      "duration": 6,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": "2026-05-05T21:32:52.147Z",
+      "action": "section_view",
+      "section": "Referanser",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:37:20.612Z",
+      "action": "section_view",
+      "section": "Statistikk",
+      "duration": 11487,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:07.395Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 40,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:08.811Z",
+      "action": "section_view",
+      "section": "Hvorfor oss",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:10.311Z",
+      "action": "section_view",
+      "section": "Tjenester",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:12.427Z",
+      "action": "section_view",
+      "section": "Om oss",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:13.627Z",
+      "action": "section_view",
+      "section": "Referanser",
+      "duration": 3,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:14.326Z",
+      "action": "section_view",
+      "section": "Bransjer & Systemer",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:15.727Z",
+      "action": "section_view",
+      "section": "FAQ",
+      "duration": 2,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:38:17.888Z",
+      "action": "section_view",
+      "section": "Kontakt",
+      "duration": 4,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:41:06.895Z",
+      "action": "section_view",
+      "section": "Hero",
+      "duration": 11,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:41:07.610Z",
+      "action": "section_view",
+      "section": "Statistikk",
+      "duration": 3,
+      "page": "/"
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:41:07.938Z",
+      "action": "section_view",
+      "section": "Hvorfor oss",
+      "duration": 2,
+      "page": "/"
+    }
+  ]
+}

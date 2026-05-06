@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a1b2c3d4-demo-4567-8901-abcdef123456",
+    "navn": "Kristian Berge",
+    "bedrift": "Berge Elektro AS",
+    "epost": "kristian@berge-elektro.no",
+    "telefon": "976 43 218",
+    "behov": "Bytte regnskapsfører",
+    "melding": "Hei Henning,\n\nJeg driver Berge Elektro AS med 12 ansatte i Bergen. Vi har hatt samme regnskapsfører i 6 år, men opplever stadig oftere at vi ikke får svar på henvendelser, og forrige kvartal ble MVA-meldingen levert for sent noe som ga oss gebyr.\n\nVi har i tillegg en del utfordringer knyttet til prosjektregnskap — vi jobber med både private og offentlige anbud, og trenger noen som forstår entrepriseregnskap og kan hjelpe oss med løpende prosjektrapportering.\n\nVi bruker Tripletex i dag men er åpne for å bytte hvis det gir bedre oversikt. Lønnskjøring for 12 ansatte + 3-4 innleide er også noe vi trenger hjelp med.\n\nKan vi ta en prat denne uken? Helst onsdag eller torsdag formiddag. Vi ønsker å ha ny regnskapsfører på plass før årsoppgjøret.\n\nMvh\nKristian Berge\nDaglig leder",
+    "timestamp": "2026-05-05T09:14:00.000Z",
+    "read": false,
+    "ai": {
+      "prioritet": "høy",
+      "kategori": "Bytte byrå",
+      "tags": ["Nytt oppdrag", "Haster", "Bytte byrå"],
+      "oppsummering": "Elektrofirma med 12 ansatte + innleide vil bytte byrå. Misfornøyd med responstid og forsinket MVA-levering. Trenger entrepriseregnskap, prosjektrapportering og lønn.",
+      "nøkkelinfo": ["12 ansatte + 3-4 innleide", "Bruker Tripletex", "Entreprise/anbud", "Ny regnskapsfører før årsoppgjøret"],
+      "datoer": [
+        {"dato": "2026-05-07", "beskrivelse": "Ønsker møte (formiddag)"},
+        {"dato": "2026-05-08", "beskrivelse": "Alternativ møtedag (formiddag)"}
+      ]
+    }
+  },
+  {
+    "id": "b2c3d4e5-demo-5678-9012-bcdef2345678",
+    "navn": "Silje Nordvik",
+    "bedrift": "Nordvik Consulting",
+    "epost": "silje@nordvik.no",
+    "telefon": "",
+    "behov": "Rådgivning / transaksjon",
+    "melding": "Hei,\n\nJeg vurderer å kjøpe opp et lite konsulentselskap og lurer på om dere kan hjelpe med verdivurdering og due diligence. Selskapet har ca. 4 mill i omsetning.\n\nSilje",
+    "timestamp": "2026-05-04T14:32:00.000Z",
+    "read": false,
+    "ai": {
+      "prioritet": "middels",
+      "kategori": "Rådgivning",
+      "tags": ["Nytt oppdrag", "Rådgivning"],
+      "oppsummering": "Vurderer oppkjøp av konsulentselskap. Trenger verdivurdering og due diligence.",
+      "nøkkelinfo": ["Oppkjøp av selskap", "Ca. 4 mill omsetning", "Verdivurdering + due diligence"],
+      "datoer": []
+    }
+  },
+  {
+    "id": "c3d4e5f6-demo-6789-0123-cdef34567890",
+    "navn": "Anders Moen",
+    "bedrift": "",
+    "epost": "anders.moen@gmail.com",
+    "telefon": "412 55 903",
+    "behov": "Ny bedrift / stiftelse",
+    "melding": "Hei! Jeg og en kompis skal starte en nettbutikk og lurer på hva det koster å få hjelp med stiftelse av AS og oppsett av regnskap fra starten. Vi har ikke peiling på MVA og sånt 😅",
+    "timestamp": "2026-05-03T18:47:00.000Z",
+    "read": true,
+    "ai": {
+      "prioritet": "lav",
+      "kategori": "Nytt oppdrag",
+      "tags": ["Nytt oppdrag", "Prisforespørsel"],
+      "oppsummering": "To gründere vil starte nettbutikk (AS). Spør om pris på stiftelse og regnskapsoppsett.",
+      "nøkkelinfo": ["Stiftelse av AS", "Nettbutikk", "2 personer", "Prisforespørsel"],
+      "datoer": []
+    }
+  }
+]

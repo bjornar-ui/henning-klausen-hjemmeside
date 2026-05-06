@@ -1,0 +1,434 @@
+{
+  "hero": {
+    "eyebrow": {
+      "value": "Autorisert regnskapsførerselskap · Hele Norge",
+      "min": 10,
+      "max": 80
+    },
+    "title": {
+      "value": "Regnskap som gir deg <em>ro i sjelen.</em>",
+      "min": 15,
+      "max": 60
+    },
+    "lead": {
+      "value": "Riktige tall, trygge frister og rådene du faktisk trenger — levert av regnskapsførere som kjenner bedriften din personlig.",
+      "min": 40,
+      "max": 200
+    },
+    "ctaPhone": {
+      "value": "Ring 482 30 281",
+      "min": 5,
+      "max": 30
+    },
+    "ctaPhoneNumber": {
+      "value": "+4748230281",
+      "min": 8,
+      "max": 20
+    },
+    "ctaSecondary": {
+      "value": "Gratis første samtale",
+      "min": 5,
+      "max": 30
+    },
+    "trustPills": {
+      "items": [
+        "Autorisert regnskapsfører",
+        "Fast kontaktperson",
+        "10+ års erfaring",
+        "Svar samme dag",
+        "PowerOffice-partner",
+        "Hele Norge"
+      ],
+      "maxItems": 6,
+      "maxLength": 30
+    }
+  },
+  "stats": {
+    "items": [
+      {
+        "value": "10",
+        "suffix": "+",
+        "label": "År i bransjen",
+        "raw": false
+      },
+      {
+        "value": "8",
+        "suffix": "",
+        "label": "Bransjer vi kan",
+        "raw": false
+      },
+      {
+        "value": "2",
+        "suffix": "",
+        "label": "Faste rådgivere",
+        "raw": false
+      },
+      {
+        "value": "24",
+        "suffix": "t",
+        "label": "Responstid",
+        "raw": false
+      }
+    ],
+    "maxItems": 4,
+    "maxValueLength": 5,
+    "maxLabelLength": 25
+  },
+  "why": {
+    "eyebrow": {
+      "value": "Hvorfor Werner Klausen",
+      "min": 5,
+      "max": 40
+    },
+    "title": {
+      "value": "Mer enn bare <em>bokføring.</em>",
+      "min": 10,
+      "max": 50
+    },
+    "body": {
+      "value": "Et godt regnskapsbyrå handler ikke om å levere tallene til Skatteetaten. Det handler om at du vet hvem du ringer når noe haster, og at du faktisk forstår dine egne tall.",
+      "min": 40,
+      "max": 300
+    },
+    "items": [
+      {
+        "title": "Du er ikke et saksnummer",
+        "body": "Du får én fast regnskapsfører som kjenner historien til bedriften din. Ingen bytter underveis, ingen kølapper."
+      },
+      {
+        "title": "Vi snakker norsk, ikke regnskapsspråk",
+        "body": "Konkrete svar og tydelige anbefalinger — uten jargong. Du skal kunne styre etter tallene dine, ikke bare undres over dem."
+      },
+      {
+        "title": "Fleksibelt samarbeid",
+        "body": "Vil du gjøre noe selv? Fint. Vil du sette ut alt? Også fint. Vi skreddersyr en løsning etter hva som faktisk passer for deg og din bedrift."
+      },
+      {
+        "title": "Proaktiv, ikke reaktiv",
+        "body": "Vi varsler deg om mulige fradrag, skatteplanlegging og reguleringer <em>før</em> det blir et problem — ikke etter."
+      }
+    ],
+    "maxItems": 6,
+    "maxTitleLength": 50,
+    "maxBodyLength": 200
+  },
+  "services": {
+    "eyebrow": {
+      "value": "Tjenester",
+      "min": 3,
+      "max": 30
+    },
+    "title": {
+      "value": "Det vi <em>gjør.</em>",
+      "min": 5,
+      "max": 40
+    },
+    "intro": {
+      "value": "Fra daglig bokføring til strategisk rådgivning ved fusjoner og kapitalendringer — vi dekker hele løpet og tilpasser oss akkurat det din bedrift trenger nå.",
+      "min": 20,
+      "max": 250
+    },
+    "items": [
+      {
+        "title": "Løpende regnskap",
+        "body": "Bokføring som alltid er à jour, MVA-meldinger som leveres i tide, og et regnskapsbilde du faktisk kan navigere etter.",
+        "tags": [
+          "Bokføring",
+          "Avstemming",
+          "MVA-rapportering",
+          "Fakturahåndtering"
+        ]
+      },
+      {
+        "title": "Lønn & HR",
+        "body": "Riktig lønn til riktig tid, A-melding, feriepenger og sykefraværsoppfølging — alt det som must-go-on måned etter måned.",
+        "tags": [
+          "Lønnskjøring",
+          "A-melding",
+          "Reiseregninger",
+          "Feriepenger"
+        ]
+      },
+      {
+        "title": "Årsoppgjør & skatt",
+        "body": "Komplett årsoppgjør med skattemelding, næringsoppgave og signering — vi tar ansvaret for at alt er korrekt og rettidig levert.",
+        "tags": [
+          "Årsregnskap",
+          "Skattemelding",
+          "Næringsoppgave",
+          "Aksjonærregister"
+        ]
+      },
+      {
+        "title": "Rådgivning & transaksjoner",
+        "body": "Fusjon, oppkjøp, avvikling, kapitalendring — de sakene som krever erfaring og nøyaktighet. Vi har gjort det mange ganger.",
+        "tags": [
+          "Verdivurdering",
+          "Stiftelse/avvikling",
+          "Kapitalendring",
+          "Controller"
+        ]
+      }
+    ],
+    "maxItems": 4,
+    "maxTitleLength": 35,
+    "maxBodyLength": 200,
+    "maxTags": 5,
+    "maxTagLength": 25
+  },
+  "about": {
+    "eyebrow": {
+      "value": "Hvem du møter",
+      "min": 3,
+      "max": 30
+    },
+    "title": {
+      "value": "Faste <em>ansikter,</em> ikke numre.",
+      "min": 10,
+      "max": 50
+    },
+    "quote": {
+      "value": "«Vi tror på regnskapsføring som faktisk gjør en forskjell — der vi forstår bedriften din like godt som du gjør selv.»",
+      "min": 20,
+      "max": 200
+    },
+    "bodyParagraphs": [
+      {
+        "value": "Henning Saksvik Klausen er autorisert regnskapsfører og siviløkonom, med over ti år i bransjen. Sammen med Raymond A. Werner, rådgiver og siviløkonom, har de bygget opp byrået på ett prinsipp: at kundene alltid skal ha faste personer å forholde seg til — som kjenner historien og kan gi reelle råd, ikke bare levere en rapport.",
+        "max": 400
+      },
+      {
+        "value": "Fra Lindesnes til Nordkapp — vi jobber digitalt med kunder i hele Norge, uten at det går på bekostning av den personlige kontakten.",
+        "max": 200
+      }
+    ],
+    "credentials": {
+      "items": [
+        "Autorisert av Finanstilsynet",
+        "Siviløkonom × 2",
+        "PowerOffice Gold Partner",
+        "Regnskap Norge-medlem"
+      ],
+      "maxItems": 6,
+      "maxLength": 35
+    },
+    "card": {
+      "tag": {
+        "value": "Daglig leder",
+        "max": 20
+      },
+      "name": {
+        "value": "Henning Saksvik Klausen",
+        "max": 30
+      },
+      "role": {
+        "value": "Autorisert regnskapsfører · Siviløkonom",
+        "max": 50
+      }
+    },
+    "badge": {
+      "number": {
+        "value": "10+",
+        "max": 5
+      },
+      "label": {
+        "value": "ÅRS\nERFARING",
+        "max": 20
+      }
+    }
+  },
+  "testimonials": {
+    "eyebrow": {
+      "value": "Hva kundene sier",
+      "min": 3,
+      "max": 30
+    },
+    "title": {
+      "value": "Vi lar <em>resultatene</em> snakke.",
+      "min": 10,
+      "max": 50
+    },
+    "items": [
+      {
+        "quote": "Endelig en regnskapsfører som svarer på telefonen og faktisk kjenner tallene mine. Ikke bare en som sender en rapport en gang i kvartalet.",
+        "name": "Lars A.",
+        "company": "Daglig leder, byggefirma i Vestland",
+        "color": "var(--forest)"
+      },
+      {
+        "quote": "Byttet fra et stort byrå til Werner Klausen for to år siden. Skulle gjort det mye tidligere. Mer tid til kjernevirksomheten, og langt bedre oversikt.",
+        "name": "Maria K.",
+        "company": "Gründer, konsulentselskap i Oslo",
+        "color": "var(--gold-deep)"
+      },
+      {
+        "quote": "Werner Klausen oppdaget en skattebesparing vi overhodet ikke visste om. Den betaler regnskapshonorarene for de neste fem årene.",
+        "name": "Torbjørn H.",
+        "company": "Eier, landbruksforetak i Trøndelag",
+        "color": "var(--forest-mid)"
+      }
+    ],
+    "maxItems": 5,
+    "maxQuoteLength": 200,
+    "maxNameLength": 25,
+    "maxCompanyLength": 50
+  },
+  "faq": {
+    "eyebrow": {
+      "value": "Vanlige spørsmål",
+      "min": 3,
+      "max": 30
+    },
+    "title": {
+      "value": "Lurer du på <em>noe?</em>",
+      "min": 5,
+      "max": 40
+    },
+    "subtitle": {
+      "value": "Her er svarene på det vi oftest får spørsmål om. Ikke finn svaret ditt her? Ring oss.",
+      "min": 10,
+      "max": 120
+    },
+    "items": [
+      {
+        "question": "Hva koster det å bruke dere?",
+        "answer": "Prisen avhenger av omfang og kompleksitet. Vi tilbyr fast månedspris tilpasset din bedrift — ingen overraskelser. Første samtale er alltid gratis og uforpliktende, og du får et konkret tilbud i løpet av et par dager."
+      },
+      {
+        "question": "Kan dere ta over fra et annet byrå?",
+        "answer": "Absolutt — og vi gjør det enkelt for deg. Vi tar kontakt med det gamle byrået, sørger for at vi får alt vi trenger, og sørger for at overgangen er smertefri. Du trenger knapt å løfte en finger."
+      },
+      {
+        "question": "Hjelper dere nyoppstartede bedrifter?",
+        "answer": "Ja, og vi liker det veldig godt. Vi hjelper deg med stiftelse, systemoppsett, første budsjett og løpende regnskap fra dag én — slik at du kan fokusere på å bygge bedriften, ikke på byråkratiet."
+      },
+      {
+        "question": "Jobber dere med kunder utenfor Bergen?",
+        "answer": "Vi jobber med kunder i hele Norge, digitalt. Med PowerOffice GO og andre skybaserte systemer trenger vi ikke å sitte i samme by for å levere nøyaktig den samme personlige servicen."
+      },
+      {
+        "question": "Hvilke systemer bruker dere?",
+        "answer": "Vi er PowerOffice Gold Partner og jobber med de fleste store norske og internasjonale systemer — Tripletex, Visma, Xledger, e-conomic og mer. Vi tilpasser oss systemet du allerede bruker."
+      },
+      {
+        "question": "Hvor raskt svarer dere på henvendelser?",
+        "answer": "Vi svarer på alle henvendelser innen samme arbeidsdag — i de fleste tilfeller innen et par timer. Haster det? Ring direkte på 482 30 281."
+      }
+    ],
+    "maxItems": 8,
+    "maxQuestionLength": 60,
+    "maxAnswerLength": 400
+  },
+  "industries": {
+    "eyebrow": {
+      "value": "Bransjer vi kan",
+      "min": 3,
+      "max": 30
+    },
+    "title": {
+      "value": "Erfaring fra <em>åtte</em> sektorer.",
+      "min": 5,
+      "max": 50
+    },
+    "body": {
+      "value": "Hver bransje har sine egne særegenheter — vi har sett dem fra innsiden og leverer løsninger som faktisk passer.",
+      "min": 10,
+      "max": 200
+    },
+    "items": {
+      "values": [
+        "Landbruk",
+        "Arkitekter",
+        "Barnehager",
+        "Shipping & rederi",
+        "Entreprenør",
+        "Logistikk",
+        "Foreninger",
+        "Holdingselskap"
+      ],
+      "maxItems": 12,
+      "maxLength": 25
+    }
+  },
+  "tools": {
+    "eyebrow": {
+      "value": "Systemer vi jobber i",
+      "min": 3,
+      "max": 30
+    },
+    "title": {
+      "value": "Vi møter deg der <em>du</em> er.",
+      "min": 5,
+      "max": 50
+    },
+    "body": {
+      "value": "Ingen tunge systembytte — vi er erfarne i de fleste norske og internasjonale plattformer.",
+      "min": 10,
+      "max": 200
+    },
+    "items": {
+      "values": [
+        "PowerOffice GO",
+        "Tripletex",
+        "Visma Global",
+        "Visma Lønn",
+        "Xledger",
+        "e-conomic",
+        "Agresso",
+        "Dataloy",
+        "JD Edwards",
+        "SAP"
+      ],
+      "maxItems": 15,
+      "maxLength": 25
+    }
+  },
+  "contact": {
+    "eyebrow": {
+      "value": "Ta kontakt",
+      "min": 3,
+      "max": 25
+    },
+    "title": {
+      "value": "La oss ta en <em>uforpliktende</em> prat.",
+      "min": 10,
+      "max": 60
+    },
+    "body": {
+      "value": "Send en kort melding, eller ring oss direkte. Du får svar innen samme arbeidsdag — ingen forpliktelser, ingen salgspress. Bare en ærlig samtale om hva din bedrift trenger.",
+      "min": 20,
+      "max": 250
+    },
+    "phone": {
+      "value": "+47 482 30 281",
+      "max": 20
+    },
+    "phoneNumber": {
+      "value": "+4748230281",
+      "max": 20
+    },
+    "email": {
+      "value": "post@wernerklausen.no",
+      "max": 40
+    },
+    "responseBadge": {
+      "value": "Svar innen samme dag",
+      "max": 40
+    },
+    "responseHours": {
+      "value": "Mandag–fredag 08:00–17:00",
+      "max": 40
+    }
+  },
+  "footer": {
+    "description": {
+      "value": "Autorisert regnskapsførerselskap med personlig kontakt for små og mellomstore bedrifter i hele Norge.",
+      "min": 20,
+      "max": 200
+    },
+    "orgNr": {
+      "value": "927 099 209 MVA",
+      "max": 20
+    }
+  }
+}

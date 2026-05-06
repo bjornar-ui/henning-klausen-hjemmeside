@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cal-demo-001",
+    "date": "2026-05-07",
+    "title": "Kristian Berge (Berge Elektro AS)",
+    "description": "Ønsker møte (formiddag)",
+    "source": "ai",
+    "messageId": "a1b2c3d4-demo-4567-8901-abcdef123456",
+    "created": "2026-05-05T09:14:00.000Z"
+  },
+  {
+    "id": "cal-demo-002",
+    "date": "2026-05-08",
+    "title": "Kristian Berge (Berge Elektro AS)",
+    "description": "Alternativ møtedag (formiddag)",
+    "source": "ai",
+    "messageId": "a1b2c3d4-demo-4567-8901-abcdef123456",
+    "created": "2026-05-05T09:14:00.000Z"
+  }
+]

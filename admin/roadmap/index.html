@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WK Admin — Videreutvikling</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A3B30'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23C4925A'>WK</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300..800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#E8E3DA;--paper:#FAF8F3;--cream:#F5F0E8;--forest:#1A3B30;--forest-d:#0F2419;
+  --gold:#C4925A;--gold-d:#9E6E38;--gold-l:#F0D9B8;--ink:#1A1815;--muted:#5C5950;--border:#DDD5C0;
+  --red:#C0392B;--green:#27AE60;--blue:#2563EB;
+}
+html{font-size:14px}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex}
+h1,h2,h3{font-family:'Fraunces',serif}
+a{color:inherit;text-decoration:none}
+
+/* Sidebar (same as dashboard) */
+.sidebar{
+  width:56px;background:var(--forest-d);display:flex;flex-direction:column;
+  align-items:center;padding:.75rem 0;gap:.25rem;flex-shrink:0;position:fixed;top:0;bottom:0;z-index:10;
+}
+.sb-logo{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:1rem}
+.sb-item{
+  width:40px;height:40px;border-radius:10px;display:grid;place-items:center;
+  color:rgba(245,240,232,.45);cursor:pointer;transition:all .15s;position:relative;
+}
+.sb-item:hover{background:rgba(245,240,232,.08);color:rgba(245,240,232,.8)}
+.sb-item.active{background:rgba(196,146,90,.15);color:var(--gold)}
+.sb-item svg{width:18px;height:18px}
+.sb-tooltip{
+  position:absolute;left:64px;top:50%;transform:translateY(-50%);
+  background:var(--forest-d);color:var(--cream);padding:.3rem .65rem;border-radius:5px;
+  font-size:.7rem;font-weight:600;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;
+}
+.sb-item:hover .sb-tooltip{opacity:1}
+.sb-spacer{flex:1}
+
+/* Main */
+.main{margin-left:56px;flex:1;padding:24px 32px;max-width:900px;overflow-y:auto}
+@media(max-width:700px){.main{padding:16px;margin-left:48px}}
+
+.page-header{margin-bottom:32px}
+.page-header h1{font-size:1.6rem;font-weight:500;color:var(--forest);margin-bottom:4px}
+.page-header p{color:var(--muted);font-size:.85rem}
+
+/* Phase cards */
+.phase{margin-bottom:28px}
+.phase-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;
+}
+.phase-num{
+  width:32px;height:32px;border-radius:8px;display:grid;place-items:center;
+  font-family:'Fraunces',serif;font-size:.85rem;font-weight:600;flex-shrink:0;
+}
+.phase-num.p1{background:var(--green);color:#fff}
+.phase-num.p2{background:var(--gold);color:#fff}
+.phase-num.p3{background:var(--forest);color:var(--gold-l)}
+.phase-num.p4{background:var(--muted);color:#fff}
+.phase-title{font-size:1rem;font-weight:700;color:var(--ink)}
+.phase-sub{font-size:.72rem;color:var(--muted);margin-left:auto}
+
+.task-list{display:flex;flex-direction:column;gap:6px}
+.task{
+  display:flex;align-items:flex-start;gap:10px;padding:10px 14px;
+  background:var(--paper);border:1px solid var(--border);border-radius:8px;
+  transition:border-color .15s;
+}
+.task:hover{border-color:var(--gold)}
+.task-check{
+  width:18px;height:18px;border:2px solid var(--border);border-radius:4px;
+  flex-shrink:0;margin-top:1px;display:grid;place-items:center;cursor:pointer;
+  transition:all .15s;
+}
+.task-check:hover{border-color:var(--gold)}
+.task-check.done{background:var(--green);border-color:var(--green)}
+.task-check.done::after{content:'✓';color:#fff;font-size:.65rem;font-weight:700}
+.task-body{flex:1;min-width:0}
+.task-title{font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:2px}
+.task-check.done + .task-body .task-title{text-decoration:line-through;color:var(--muted)}
+.task-desc{font-size:.72rem;color:var(--muted);line-height:1.45}
+.task-tags{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.tag{font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em}
+.tag.need-input{background:#FEF3C7;color:#92400E}
+.tag.dev{background:#DBEAFE;color:#1E40AF}
+.tag.seo{background:#D1FAE5;color:#065F46}
+.tag.content{background:#EDE9FE;color:#5B21B6}
+.tag.design{background:#FCE7F3;color:#9D174D}
+.tag.done-tag{background:#D1FAE5;color:#065F46}
+
+/* Separator */
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);margin:8px 0}
+
+/* Info box */
+.info-box{
+  background:var(--paper);border:1px solid var(--border);border-radius:10px;
+  padding:14px 18px;margin-bottom:24px;
+}
+.info-box h3{font-size:.85rem;color:var(--forest);margin-bottom:6px}
+.info-box p{font-size:.78rem;color:var(--muted);line-height:1.5}
+.info-box ul{font-size:.78rem;color:var(--muted);line-height:1.6;padding-left:18px;margin-top:4px}
+
+/* Questions section */
+.questions{margin-top:32px}
+.q-card{
+  display:flex;gap:10px;padding:10px 14px;
+  background:var(--paper);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:6px;
+}
+.q-num{
+  width:22px;height:22px;border-radius:50%;background:var(--gold);color:#fff;
+  font-size:.65rem;font-weight:700;display:grid;place-items:center;flex-shrink:0;margin-top:1px;
+}
+.q-text{font-size:.78rem;color:var(--ink);line-height:1.45}
+.q-why{font-size:.68rem;color:var(--muted);margin-top:2px}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sb-logo">W</div>
+  <a class="sb-item" href="/admin">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span class="sb-tooltip">Dashboard</span>
+  </a>
+  <a class="sb-item" href="/admin/forside">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    <span class="sb-tooltip">Rediger forside</span>
+  </a>
+  <div class="sb-item active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    <span class="sb-tooltip">Videreutvikling</span>
+  </div>
+  <div class="sb-spacer"></div>
+  <a class="sb-item" href="/" target="_blank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    <span class="sb-tooltip">Vis nettside</span>
+  </a>
+</nav>
+
+<main class="main">
+  <div class="page-header">
+    <h1>Videreutvikling</h1>
+    <p>Alt som skal gjøres, mangler og neste steg — klar når Henning sier go.</p>
+  </div>
+
+  <!-- Info -->
+  <div class="info-box">
+    <h3>Hva er dette?</h3>
+    <p>Denne oversikten viser alt vi har planlagt for wernerklausen.no. Oppgavene er sortert i faser — fra ting som kan gjøres i dag, til langsiktig innholdsstrategi. Noen oppgaver krever input fra Henning (merket med gult). Klikk på en oppgave for å markere den som ferdig.</p>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p1">1</div>
+      <div class="phase-title">Venter på Henning</div>
+      <div class="phase-sub">Krever input før vi kan gå videre</div>
+    </div>
+    <div class="task-list">
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Fysisk adresse</div>
+        <div class="task-desc">Trengs for Google Business Profile, JSON-LD schema, og footer. Gateadresse + postnummer i Bergen.</div>
+        <div class="task-tags"><span class="tag need-input">Trenger svar</span><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Portrettbilder av Henning og Raymond</div>
+        <div class="task-desc">Profesjonelle bilder for Om oss-seksjonen og bio-sider. Erstatter HK-placeholder. Helst 800x1000px, portrett-format.</div>
+        <div class="task-tags"><span class="tag need-input">Trenger filer</span><span class="tag design">Design</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">LinkedIn-URL-er</div>
+        <div class="task-desc">Firma-profil + Henning personlig + Raymond personlig. Brukes i schema.org for E-E-A-T (Google-tillit).</div>
+        <div class="task-tags"><span class="tag need-input">Trenger svar</span><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Google Business Profile</div>
+        <div class="task-desc">Opprettes av Henning på business.google.com. Det viktigste enkle SEO-tiltaket for et lokalt byrå. Vi hjelper med optimalisering etterpå.</div>
+        <div class="task-tags"><span class="tag need-input">Henning gjør</span><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Er testimonialene ekte?</div>
+        <div class="task-desc">Lars A., Maria K., Torbjørn H. — er dette ekte kunder med samtykke? Hvis ja, kan vi bruke fullt navn for sterkere troverdighet. Hvis nei, bør vi merke dem som eksempler.</div>
+        <div class="task-tags"><span class="tag need-input">Trenger svar</span><span class="tag content">Innhold</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Prisrammer — vil dere avsløre?</div>
+        <div class="task-desc">"Hva koster regnskapsfører" er det mest googlete spørsmålet i bransjen. Selv grove rammer (f.eks. "typisk 3-7.000 kr/mnd") ville gitt en kraftig SEO-side.</div>
+        <div class="task-tags"><span class="tag need-input">Trenger svar</span><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Er PowerOffice Gold Partner verifiserbart?</div>
+        <div class="task-desc">Kan vi lenke til en partner-side hos PowerOffice som bekrefter dette? Viktig for troverdighet.</div>
+        <div class="task-tags"><span class="tag need-input">Trenger svar</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">SMTP-credentials for e-postvarsling</div>
+        <div class="task-desc">For at kontaktskjema-meldinger skal sendes til post@wernerklausen.no. Trenger SMTP-host, bruker og passord (Outlook: smtp.office365.com).</div>
+        <div class="task-tags"><span class="tag need-input">Trenger credentials</span><span class="tag dev">Teknisk</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p2">2</div>
+      <div class="phase-title">Klart til bygging</div>
+      <div class="phase-sub">Kan startes umiddelbart</div>
+    </div>
+    <div class="task-list">
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">OG-delingsbilde (1200x630px)</div>
+        <div class="task-desc">Når noen deler lenken på LinkedIn eller Facebook vises dette bildet. Bør ha hero-stil med tagline. Meta-tags er allerede på plass, mangler bare bildet.</div>
+        <div class="task-tags"><span class="tag design">Design</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Personvernerklæring (/personvern)</div>
+        <div class="task-desc">Lovkrav under GDPR art. 13. Kontaktskjemaet samler persondata, og siden mangler personvernerklæring. Lenke fra skjema-note og footer.</div>
+        <div class="task-tags"><span class="tag dev">Teknisk</span><span class="tag content">Innhold</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Koble domenet wernerklausen.no</div>
+        <div class="task-desc">Pek wernerklausen.no til Vercel. Oppdater canonical, og:url, og sitemap. Sett opp SSL-redirect.</div>
+        <div class="task-tags"><span class="tag dev">Teknisk</span><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Google Search Console + Analytics</div>
+        <div class="task-desc">Verifiser eierskap, submit sitemap, sett opp GA4 for trafikk-analyse. Kritisk for å måle SEO-effekt.</div>
+        <div class="task-tags"><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Video-optimalisering</div>
+        <div class="task-desc">Lag WebM-versjoner av intro og loop (30% mindre). Poster-bilde for prefers-reduced-motion. Forbedrer lastehastighet.</div>
+        <div class="task-tags"><span class="tag dev">Teknisk</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">"År i bransjen" beregnet fra startdato</div>
+        <div class="task-desc">I stedet for hardkodet "10+" — Henning legger inn startår i admin, siden beregner automatisk. Slipper å oppdatere hvert år.</div>
+        <div class="task-tags"><span class="tag dev">Teknisk</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Migrering til Cognito + DynamoDB</div>
+        <div class="task-desc">Bytt fra lokal passord til AWS Cognito (Studio Solberg). Flytt data fra JSON-filer til DynamoDB. E-post via AWS SES. Full produksjonsarkitektur.</div>
+        <div class="task-tags"><span class="tag dev">Teknisk</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p3">3</div>
+      <div class="phase-title">SEO & nye sider</div>
+      <div class="phase-sub">Uke 2-4 — bygger organisk synlighet</div>
+    </div>
+    <div class="task-list">
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Bio-sider for Henning og Raymond</div>
+        <div class="task-desc">/team/henning-saksvik-klausen og /team/raymond-werner. Foto, utdanning, spesialiseringer, LinkedIn. Kritisk for Google E-E-A-T (tillit).</div>
+        <div class="task-tags"><span class="tag seo">SEO</span><span class="tag content">Innhold</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Tjenestesider (6 sider)</div>
+        <div class="task-desc">Løpende regnskap, Lønn & HR, Årsoppgjør, Rådgivning, Outsourcing, Konsulent. Hver 800-1500 ord med eget keyword-fokus. Single-page er flott for branding, dårlig for SEO.</div>
+        <div class="task-tags"><span class="tag seo">SEO</span><span class="tag content">Innhold</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Lokal landingside: /regnskapsforer-bergen</div>
+        <div class="task-desc">Dedikert side for "regnskapsfører Bergen"-søk med Google Maps, lokalt innhold, og Bergen-spesifikke referanser. Mål: topp 10 på 6 mnd.</div>
+        <div class="task-tags"><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Pris-side</div>
+        <div class="task-desc">"Hva koster regnskapsfører" er det mest stilte spørsmålet. Selv uten eksakte priser kan prismodell, rammer og eksempler rangere høyt.</div>
+        <div class="task-tags"><span class="tag seo">SEO</span><span class="tag need-input">Trenger prisinfo</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Bransje-sider (3-5 av 8)</div>
+        <div class="task-desc">Landbruk, Shipping, Entreprenør, Foreninger, Holdingselskap. 1000-2000 ord med bransjespesifikk kunnskap. Rangerer på "regnskapsfører [bransje]".</div>
+        <div class="task-tags"><span class="tag seo">SEO</span><span class="tag content">Innhold</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">System-sider (PowerOffice, Tripletex, Visma)</div>
+        <div class="task-desc">300-600 ord per system. Utnytt Gold Partner-status. Rangerer på "PowerOffice GO regnskapsfører".</div>
+        <div class="task-tags"><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">FAQ utvidet til 15-20 spørsmål</div>
+        <div class="task-desc">Legg til: "Må jeg ha autorisert regnskapsfører?", "Hva er forskjellen på regnskapsfører og bokfører?", "Har dere taushetsplikt?" osv. Hvert spørsmål = en mulighet for rich results i Google.</div>
+        <div class="task-tags"><span class="tag seo">SEO</span><span class="tag content">Innhold</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p4">4</div>
+      <div class="phase-title">Langsiktig vekst</div>
+      <div class="phase-sub">Måned 2-6 — innhold og autoritet</div>
+    </div>
+    <div class="task-list">
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Blogg-plattform (/innsikt)</div>
+        <div class="task-desc">Hub-side + mal for artikler. Mål: 2 artikler/mnd. Emner: skatt, oppstart, bransje-guider, prisguider. Bygger long-tail trafikk over tid.</div>
+        <div class="task-tags"><span class="tag dev">Teknisk</span><span class="tag content">Innhold</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Lokale citations (proff.no, gulesider, 1881)</div>
+        <div class="task-desc">Sørg for at firmanavn, adresse og telefon er identiske overalt. Avvik svekker lokal SEO.</div>
+        <div class="task-tags"><span class="tag seo">SEO</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Google-anmeldelser (mål: 20+)</div>
+        <div class="task-desc">Send direkte Google review-lenke til eksisterende kunder. Legg lenke i e-postsignatur. Aldri kjøp anmeldelser.</div>
+        <div class="task-tags"><span class="tag seo">SEO</span><span class="tag need-input">Henning gjør</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">LinkedIn bedriftsside</div>
+        <div class="task-desc">For B2B er LinkedIn ofte viktigere enn Google. Post 1-2x/uke om regnskapstema. Deltar i diskusjoner.</div>
+        <div class="task-tags"><span class="tag content">Innhold</span></div>
+      </div></div>
+      <div class="task"><div class="task-check" onclick="this.classList.toggle('done')"></div><div class="task-body">
+        <div class="task-title">Backlink-strategi</div>
+        <div class="task-desc">Gjesteinnlegg, lokalpresse (BT), fagforeninger (NHO Vestland), Bergen Næringsråd, lokale gründer-events.</div>
+        <div class="task-tags"><span class="tag seo">SEO</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- Questions -->
+  <div class="questions">
+    <h2 style="font-size:1.1rem;color:var(--forest);margin-bottom:12px;">Spørsmål til Henning</h2>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px;">Disse må besvares før vi kan fullføre alle oppgavene. Send gjerne svar på e-post eller i et kort møte.</p>
+    <div class="q-card"><div class="q-num">1</div><div><div class="q-text">Hva er den fysiske adressen til Werner Klausen Regnskap AS?</div><div class="q-why">Brukes i Google, schema.org, og footer</div></div></div>
+    <div class="q-card"><div class="q-num">2</div><div><div class="q-text">LinkedIn-URL for firmaet, Henning, og Raymond?</div><div class="q-why">Google bruker LinkedIn-lenker for å verifisere ekspertise</div></div></div>
+    <div class="q-card"><div class="q-num">3</div><div><div class="q-text">Er Bergen primær-lokasjon, eller er dere rent nasjonale?</div><div class="q-why">Avgjør hele den lokale SEO-strategien</div></div></div>
+    <div class="q-card"><div class="q-num">4</div><div><div class="q-text">Er testimonialene på siden ekte kundesitater med samtykke?</div><div class="q-why">Ekte anmeldelser med fullt navn gir mye sterkere Google-tillit</div></div></div>
+    <div class="q-card"><div class="q-num">5</div><div><div class="q-text">Er dere åpne for å vise prisrammer på nettsiden?</div><div class="q-why">"Hva koster regnskapsfører" er det mest googlete spørsmålet i bransjen</div></div></div>
+    <div class="q-card"><div class="q-num">6</div><div><div class="q-text">Har dere allerede Google Business Profile?</div><div class="q-why">Det viktigste enkle SEO-tiltaket for lokal synlighet</div></div></div>
+    <div class="q-card"><div class="q-num">7</div><div><div class="q-text">Har dere en personvernerklæring fra før?</div><div class="q-why">Lovkrav — kontaktskjemaet samler persondata</div></div></div>
+    <div class="q-card"><div class="q-num">8</div><div><div class="q-text">Hvilke 3 bransjer har dere mest erfaring i?</div><div class="q-why">Prioriterer hvilke bransjesider vi bygger først</div></div></div>
+  </div>
+
+  <div style="margin-top:40px;padding:16px;background:var(--paper);border:1px solid var(--border);border-radius:8px;font-size:.75rem;color:var(--muted);line-height:1.5">
+    <strong style="color:var(--forest)">Forventet tidslinje hvis alt godkjennes:</strong><br>
+    Fase 1 (input) → 1-2 dager etter svar &nbsp;|&nbsp; Fase 2 (bygging) → 1 uke &nbsp;|&nbsp; Fase 3 (SEO-sider) → 2-4 uker &nbsp;|&nbsp; Fase 4 (vekst) → løpende<br><br>
+    <strong style="color:var(--forest)">SEO-mål:</strong> Topp 10 på "regnskapsfører Bergen" innen 6 mnd. Topp 5 innen 12 mnd. 50+ kunder fra organisk søk innen 12 mnd.
+  </div>
+</main>
+
+</body>
+</html>

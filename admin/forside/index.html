@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WK Admin — Werner Klausen Regnskap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300..800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #F5F0E8;
+  --paper: #FAF8F3;
+  --forest: #1A3B30;
+  --forest-dark: #0F2419;
+  --gold: #C4925A;
+  --gold-deep: #9E6E38;
+  --gold-light: #F0D9B8;
+  --ink: #1A1815;
+  --muted: #5C5950;
+  --border: #DDD5C0;
+  --red: #C0392B;
+  --red-light: #F8D7DA;
+  --green: #27AE60;
+  --green-light: #D4EDDA;
+  --sidebar-w: 240px;
+  --topbar-h: 56px;
+}
+
+html { font-size: 15px; }
+body { font-family: 'Manrope', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+
+h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 600; }
+
+/* ── Login ── */
+.login-wrap {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 1rem;
+}
+.login-card {
+  background: var(--paper); border: 1px solid var(--border);
+  border-radius: 12px; padding: 2.5rem 2rem; width: 100%; max-width: 380px;
+  box-shadow: 0 4px 24px rgba(26,59,48,.08);
+}
+.login-card h1 {
+  font-size: 1.6rem; color: var(--forest); margin-bottom: .35rem; text-align: center;
+}
+.login-card p { color: var(--muted); font-size: .85rem; text-align: center; margin-bottom: 1.5rem; }
+.login-card input {
+  width: 100%; padding: .7rem .9rem; border: 1px solid var(--border);
+  border-radius: 8px; font-size: .95rem; font-family: inherit;
+  background: var(--cream); outline: none; transition: border-color .2s;
+}
+.login-card input:focus { border-color: var(--gold); }
+.login-card button {
+  width: 100%; margin-top: 1rem; padding: .75rem; border: none;
+  border-radius: 8px; background: var(--forest); color: #fff;
+  font-family: inherit; font-size: .95rem; font-weight: 600;
+  cursor: pointer; transition: background .2s;
+}
+.login-card button:hover { background: var(--forest-dark); }
+.login-error {
+  color: var(--red); font-size: .82rem; margin-top: .6rem; text-align: center;
+  min-height: 1.2rem;
+}
+
+/* ── Admin layout ── */
+.admin { display: none; height: 100vh; flex-direction: column; }
+.admin.active { display: flex; }
+
+.topbar {
+  height: var(--topbar-h); background: var(--forest-dark); color: #fff;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem; flex-shrink: 0; z-index: 10;
+}
+.topbar-brand { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 700; letter-spacing: -.02em; }
+.topbar-right { display: flex; align-items: center; gap: 1rem; }
+.topbar-right a, .topbar-right button {
+  color: rgba(255,255,255,.75); font-size: .82rem; font-family: inherit;
+  text-decoration: none; background: none; border: none; cursor: pointer;
+  transition: color .2s;
+}
+.topbar-right a:hover, .topbar-right button:hover { color: #fff; }
+
+.admin-body { display: flex; flex: 1; overflow: hidden; }
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-w); background: var(--paper); border-right: 1px solid var(--border);
+  overflow-y: auto; flex-shrink: 0; padding: .75rem 0;
+}
+.sidebar-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .6rem 1.15rem; font-size: .85rem; font-weight: 500;
+  color: var(--muted); cursor: pointer; border-left: 3px solid transparent;
+  transition: all .15s; user-select: none;
+}
+.sidebar-item:hover { background: var(--cream); color: var(--ink); }
+.sidebar-item.active {
+  background: var(--cream); color: var(--forest); border-left-color: var(--gold);
+  font-weight: 700;
+}
+.sidebar-divider { height: 1px; background: var(--border); margin: .5rem 1rem; }
+.badge {
+  background: var(--gold); color: #fff; font-size: .7rem; font-weight: 700;
+  padding: .1rem .45rem; border-radius: 10px; min-width: 18px; text-align: center;
+}
+
+/* Main content */
+.main {
+  flex: 1; overflow-y: auto; padding: 2rem 2.5rem 6rem;
+  background: var(--cream);
+}
+.main h2 { font-size: 1.4rem; color: var(--forest); margin-bottom: 1.5rem; }
+
+/* Fields */
+.field-group { margin-bottom: 1.5rem; }
+.field-label {
+  display: block; font-size: .78rem; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .04em; margin-bottom: .35rem;
+}
+.field-hint {
+  font-size: .72rem; color: var(--gold-deep); margin-bottom: .3rem; font-style: italic;
+}
+.field-input, .field-textarea {
+  width: 100%; padding: .6rem .8rem; border: 1px solid var(--border);
+  border-radius: 8px; font-size: .9rem; font-family: inherit;
+  background: var(--paper); outline: none; transition: border-color .2s;
+  color: var(--ink);
+}
+.field-input:focus, .field-textarea:focus { border-color: var(--gold); }
+.field-textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+.char-count {
+  font-size: .72rem; color: var(--muted); margin-top: .2rem; text-align: right;
+}
+.char-count.warn { color: var(--gold-deep); font-weight: 600; }
+.char-count.over { color: var(--red); font-weight: 700; }
+
+/* Array items */
+.array-section { margin-bottom: 2rem; }
+.array-section h3 { font-size: 1rem; color: var(--forest); margin-bottom: .75rem; }
+.array-item {
+  background: var(--paper); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1rem 1.15rem; margin-bottom: .75rem; position: relative;
+}
+.array-item .item-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem;
+}
+.array-item .item-number {
+  font-size: .72rem; font-weight: 700; color: var(--gold-deep);
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.btn-remove {
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: .25rem .6rem; font-size: .75rem; color: var(--red); cursor: pointer;
+  font-family: inherit; font-weight: 600; transition: all .15s;
+}
+.btn-remove:hover { background: var(--red-light); border-color: var(--red); }
+
+.btn-add {
+  display: inline-flex; align-items: center; gap: .35rem;
+  background: none; border: 1px dashed var(--border); border-radius: 8px;
+  padding: .55rem 1rem; font-size: .82rem; color: var(--forest); cursor: pointer;
+  font-family: inherit; font-weight: 600; transition: all .15s;
+}
+.btn-add:hover { border-color: var(--gold); background: var(--paper); }
+
+/* Tags */
+.tags-wrap { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .35rem; }
+.tag-chip {
+  display: inline-flex; align-items: center; gap: .3rem;
+  background: var(--cream); border: 1px solid var(--border); border-radius: 6px;
+  padding: .25rem .55rem; font-size: .78rem;
+}
+.tag-chip input {
+  border: none; background: none; font-size: .78rem; font-family: inherit;
+  outline: none; width: 100px; color: var(--ink);
+}
+.tag-chip .tag-remove {
+  background: none; border: none; color: var(--muted); cursor: pointer;
+  font-size: .85rem; line-height: 1; padding: 0;
+}
+.tag-chip .tag-remove:hover { color: var(--red); }
+
+/* Checkbox */
+.field-checkbox {
+  display: flex; align-items: center; gap: .5rem;
+}
+.field-checkbox input[type="checkbox"] {
+  width: 16px; height: 16px; accent-color: var(--forest);
+}
+.field-checkbox label { font-size: .85rem; color: var(--ink); cursor: pointer; }
+
+/* Save bar */
+.save-bar {
+  position: fixed; bottom: 0; right: 0;
+  left: var(--sidebar-w);
+  background: var(--paper); border-top: 1px solid var(--border);
+  padding: .75rem 2rem; display: flex; align-items: center;
+  justify-content: flex-end; gap: 1rem; z-index: 20;
+}
+.btn-save {
+  background: var(--forest); color: #fff; border: none; border-radius: 8px;
+  padding: .65rem 1.8rem; font-size: .9rem; font-weight: 700;
+  font-family: inherit; cursor: pointer; transition: background .2s;
+}
+.btn-save:hover { background: var(--forest-dark); }
+.btn-save:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 5rem; right: 2rem;
+  padding: .7rem 1.2rem; border-radius: 8px; font-size: .85rem; font-weight: 600;
+  z-index: 100; transform: translateY(20px); opacity: 0;
+  transition: all .3s ease;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { background: var(--green-light); color: #155724; border: 1px solid #c3e6cb; }
+.toast.error { background: var(--red-light); color: var(--red); border: 1px solid #f5c6cb; }
+
+/* ── Messages ── */
+.msg-list { display: flex; flex-direction: column; gap: .75rem; }
+.msg-card {
+  background: var(--paper); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.15rem 1.25rem; border-left: 4px solid transparent;
+  transition: border-color .2s;
+}
+.msg-card.unread { border-left-color: var(--gold); }
+.msg-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: .6rem; gap: 1rem;
+}
+.msg-meta { flex: 1; }
+.msg-name { font-weight: 700; font-size: .95rem; color: var(--forest); }
+.msg-company { font-size: .82rem; color: var(--muted); }
+.msg-time { font-size: .72rem; color: var(--muted); white-space: nowrap; }
+.msg-contacts {
+  display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: .6rem; font-size: .82rem;
+}
+.msg-contacts a { color: var(--gold-deep); text-decoration: none; }
+.msg-contacts a:hover { text-decoration: underline; }
+.msg-contacts span { color: var(--muted); }
+.msg-behov {
+  display: inline-block; background: var(--gold-light); color: var(--gold-deep);
+  font-size: .75rem; font-weight: 600; padding: .15rem .55rem;
+  border-radius: 5px; margin-bottom: .5rem;
+}
+.msg-body { font-size: .88rem; color: var(--ink); line-height: 1.55; white-space: pre-wrap; }
+.msg-actions { margin-top: .75rem; text-align: right; }
+.btn-delete {
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: .3rem .75rem; font-size: .78rem; color: var(--red);
+  cursor: pointer; font-family: inherit; font-weight: 600; transition: all .15s;
+}
+.btn-delete:hover { background: var(--red-light); border-color: var(--red); }
+.empty-state {
+  text-align: center; padding: 4rem 1rem; color: var(--muted); font-size: .95rem;
+}
+
+/* Color select */
+.field-select {
+  width: 100%; padding: .6rem .8rem; border: 1px solid var(--border);
+  border-radius: 8px; font-size: .9rem; font-family: inherit;
+  background: var(--paper); outline: none; color: var(--ink);
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  :root { --sidebar-w: 200px; }
+  .main { padding: 1.5rem 1.25rem 6rem; }
+}
+@media (max-width: 600px) {
+  .sidebar { position: fixed; left: -260px; top: var(--topbar-h); bottom: 0;
+    z-index: 30; width: 250px; transition: left .25s; box-shadow: 4px 0 20px rgba(0,0,0,.15); }
+  .sidebar.open { left: 0; }
+  .save-bar { left: 0; }
+  .topbar-brand { cursor: pointer; }
+  .topbar-brand::before { content: '☰ '; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <h1>HK Admin</h1>
+    <p>Logg inn for å redigere innholdet</p>
+    <form id="loginForm">
+      <input type="password" id="loginPassword" placeholder="Passord" autocomplete="current-password" autofocus>
+      <button type="submit">Logg inn</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPanel" class="admin">
+  <div class="topbar">
+    <div class="topbar-brand" id="topbarBrand">HK Admin</div>
+    <div class="topbar-right">
+      <a href="/" target="_blank">Vis forsiden ↗</a>
+      <button id="logoutBtn">Logg ut</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <nav class="sidebar" id="sidebar"></nav>
+    <main class="main" id="mainContent"></main>
+  </div>
+  <div class="save-bar" id="saveBar" style="display:none;">
+    <button class="btn-save" id="saveBtn">Lagre endringer</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+'use strict';
+
+const API = '';
+const TOKEN_KEY = 'hk-admin-token';
+
+// ── Sections config ──
+const SECTIONS = [
+  { id: 'hero', label: 'Hero' },
+  { id: 'stats', label: 'Statistikk' },
+  { id: 'why', label: 'Hvorfor oss' },
+  { id: 'services', label: 'Tjenester' },
+  { id: 'about', label: 'Om oss' },
+  { id: 'testimonials', label: 'Referanser' },
+  { id: 'faq', label: 'FAQ' },
+  { id: 'industries', label: 'Bransjer' },
+  { id: 'tools', label: 'Systemer' },
+  { id: 'contact', label: 'Kontakt' },
+  { id: 'footer', label: 'Bunntekst' },
+];
+
+let content = null;
+let messages = [];
+let activeSection = 'hero';
+let dirty = false;
+
+// ── Auth helpers ──
+function getToken() { return sessionStorage.getItem(TOKEN_KEY); }
+function setToken(t) { sessionStorage.setItem(TOKEN_KEY, t); }
+function clearToken() { sessionStorage.removeItem(TOKEN_KEY); }
+
+async function apiFetch(url, opts = {}) {
+  const token = getToken();
+  if (token) {
+    opts.headers = { ...opts.headers, 'Authorization': 'Bearer ' + token };
+  }
+  opts.headers = { 'Content-Type': 'application/json', ...opts.headers };
+  const res = await fetch(API + url, opts);
+  if (res.status === 401) {
+    clearToken();
+    showLogin();
+    throw new Error('Unauthorized');
+  }
+  return res;
+}
+
+// ── Toast ──
+function showToast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + type;
+  requestAnimationFrame(() => el.classList.add('show'));
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── Login / Logout ──
+function showLogin() {
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminPanel').classList.remove('active');
+  document.getElementById('loginPassword').focus();
+}
+
+function showAdmin() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').classList.add('active');
+  loadData();
+}
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const pw = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  try {
+    const res = await fetch(API + '/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    if (!res.ok) { errEl.textContent = 'Feil passord'; return; }
+    const data = await res.json();
+    setToken(data.token);
+    showAdmin();
+  } catch { errEl.textContent = 'Kunne ikke koble til serveren'; }
+});
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  try { await apiFetch('/api/logout', { method: 'POST' }); } catch {}
+  clearToken();
+  showLogin();
+});
+
+// Mobile sidebar toggle
+document.getElementById('topbarBrand').addEventListener('click', () => {
+  if (window.innerWidth <= 600) {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+});
+
+// ── Data loading ──
+async function loadData() {
+  try {
+    const [cRes, mRes] = await Promise.all([
+      apiFetch('/api/content'),
+      apiFetch('/api/messages')
+    ]);
+    content = await cRes.json();
+    messages = await mRes.json();
+    dirty = false;
+    buildSidebar();
+    renderSection(activeSection);
+  } catch (err) {
+    if (err.message !== 'Unauthorized') showToast('Feil ved lasting av data', 'error');
+  }
+}
+
+// ── Sidebar ──
+function buildSidebar() {
+  const sb = document.getElementById('sidebar');
+  const unread = messages.filter(m => !m.read).length;
+  sb.innerHTML = SECTIONS.map(s =>
+    `<div class="sidebar-item${s.id === activeSection ? ' active' : ''}" data-section="${s.id}">${s.label}</div>`
+  ).join('') +
+  `<div class="sidebar-divider"></div>
+   <div class="sidebar-item${activeSection === 'messages' ? ' active' : ''}" data-section="messages">
+     Meldinger ${unread > 0 ? `<span class="badge">${unread}</span>` : ''}
+   </div>`;
+
+  sb.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => {
+      activeSection = item.dataset.section;
+      sb.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      renderSection(activeSection);
+      if (window.innerWidth <= 600) sb.classList.remove('open');
+    });
+  });
+}
+
+// ── Render dispatcher ──
+function renderSection(id) {
+  const main = document.getElementById('mainContent');
+  const saveBar = document.getElementById('saveBar');
+  if (id === 'messages') {
+    saveBar.style.display = 'none';
+    renderMessages(main);
+    return;
+  }
+  saveBar.style.display = 'flex';
+  const section = content[id];
+  if (!section) { main.innerHTML = '<p>Seksjon ikke funnet.</p>'; return; }
+  main.innerHTML = `<h2>${SECTIONS.find(s => s.id === id)?.label || id}</h2><div id="sectionFields"></div>`;
+  const container = document.getElementById('sectionFields');
+  renderFields(container, id, section);
+  main.scrollTop = 0;
+}
+
+// ── Field rendering ──
+function renderFields(container, sectionId, section) {
+  let html = '';
+  const keys = Object.keys(section);
+
+  for (const key of keys) {
+    const val = section[key];
+    if (key === 'maxItems' || key === 'maxTitleLength' || key === 'maxBodyLength' ||
+        key === 'maxQuoteLength' || key === 'maxNameLength' || key === 'maxCompanyLength' ||
+        key === 'maxTags' || key === 'maxTagLength' || key === 'maxValueLength' ||
+        key === 'maxLabelLength' || key === 'maxQuestionLength' || key === 'maxAnswerLength') continue;
+
+    if (val && typeof val === 'object' && 'value' in val) {
+      // Simple field with value/min/max
+      html += renderValueField(sectionId, key, val);
+    } else if (key === 'items' && Array.isArray(val)) {
+      html += renderArrayItems(sectionId, key, val, section);
+    } else if (key === 'items' && val && typeof val === 'object' && 'values' in val) {
+      html += renderSimpleArray(sectionId, val);
+    } else if (key === 'trustPills' && val && 'items' in val) {
+      html += renderSimpleArrayField(sectionId, key, val);
+    } else if (key === 'bodyParagraphs' && Array.isArray(val)) {
+      html += renderParagraphs(sectionId, val);
+    } else if (key === 'credentials' && val && 'items' in val) {
+      html += renderSimpleArrayField(sectionId, key, val);
+    } else if (key === 'card' && typeof val === 'object') {
+      html += '<div class="array-item" style="margin-bottom:1rem;"><div class="item-header"><span class="item-number">Visittkort</span></div>';
+      for (const ck of Object.keys(val)) {
+        html += renderValueField(sectionId + '.card', ck, val[ck]);
+      }
+      html += '</div>';
+    } else if (key === 'badge' && typeof val === 'object') {
+      html += '<div class="array-item" style="margin-bottom:1rem;"><div class="item-header"><span class="item-number">Badge</span></div>';
+      for (const bk of Object.keys(val)) {
+        html += renderValueField(sectionId + '.badge', bk, val[bk]);
+      }
+      html += '</div>';
+    }
+  }
+
+  container.innerHTML = html;
+  attachFieldListeners(container);
+}
+
+function fieldLabel(key) {
+  const labels = {
+    eyebrow: 'Overskrift (liten)',
+    title: 'Tittel',
+    lead: 'Ingress',
+    body: 'Brødtekst',
+    intro: 'Introduksjon',
+    ctaPhone: 'Ring-knapp tekst',
+    ctaPhoneNumber: 'Telefonnummer (lenke)',
+    ctaSecondary: 'Sekundær CTA',
+    phone: 'Telefon (visning)',
+    phoneNumber: 'Telefon (lenke)',
+    email: 'E-post',
+    responseBadge: 'Respons-badge',
+    responseHours: 'Åpningstider',
+    description: 'Beskrivelse',
+    orgNr: 'Org.nr.',
+    quote: 'Sitat',
+    subtitle: 'Undertittel',
+    tag: 'Tag',
+    name: 'Navn',
+    role: 'Rolle',
+    number: 'Tall',
+    label: 'Etikett',
+    value: 'Verdi',
+    suffix: 'Suffiks',
+    question: 'Spørsmål',
+    answer: 'Svar',
+    company: 'Firma',
+    color: 'Farge',
+  };
+  return labels[key] || key.charAt(0).toUpperCase() + key.slice(1);
+}
+
+function hasEmSupport(key) {
+  return ['title', 'body', 'quote'].includes(key);
+}
+
+function stripTags(str) {
+  return (str || '').replace(/<[^>]*>/g, '');
+}
+
+function renderValueField(path, key, field) {
+  const maxLen = field.max || 9999;
+  const val = field.value || '';
+  const plainLen = stripTags(val).length;
+  const isLong = maxLen > 60;
+  const pct = plainLen / maxLen;
+  const countClass = pct >= 1 ? 'over' : pct >= 0.8 ? 'warn' : '';
+
+  let hint = '';
+  if (hasEmSupport(key)) hint = `<div class="field-hint">Bruk &lt;em&gt;...&lt;/em&gt; for uthevet gull-tekst</div>`;
+
+  const inputId = `field_${path}_${key}`;
+
+  if (isLong) {
+    const rows = Math.max(2, Math.ceil(maxLen / 80));
+    return `<div class="field-group">
+      <label class="field-label" for="${inputId}">${fieldLabel(key)}</label>
+      ${hint}
+      <textarea class="field-textarea" id="${inputId}" data-path="${path}" data-key="${key}" data-max="${maxLen}" rows="${rows}">${escHtml(val)}</textarea>
+      <div class="char-count ${countClass}">${plainLen} / ${maxLen}</div>
+    </div>`;
+  }
+
+  return `<div class="field-group">
+    <label class="field-label" for="${inputId}">${fieldLabel(key)}</label>
+    ${hint}
+    <input class="field-input" id="${inputId}" data-path="${path}" data-key="${key}" data-max="${maxLen}" type="text" value="${escAttr(val)}">
+    <div class="char-count ${countClass}">${plainLen} / ${maxLen}</div>
+  </div>`;
+}
+
+function renderArrayItems(sectionId, key, items, section) {
+  const maxTitle = section.maxTitleLength || 100;
+  const maxBody = section.maxBodyLength || 300;
+  const maxQuote = section.maxQuoteLength || 200;
+  const maxQuestion = section.maxQuestionLength || 60;
+  const maxAnswer = section.maxAnswerLength || 400;
+  const maxName = section.maxNameLength || 25;
+  const maxCompany = section.maxCompanyLength || 50;
+  const maxItems = section.maxItems || 20;
+  const maxValue = section.maxValueLength || 10;
+  const maxLabel = section.maxLabelLength || 25;
+  const maxTags = section.maxTags || 5;
+  const maxTagLen = section.maxTagLength || 25;
+
+  let html = '<div class="array-section"><h3>Elementer</h3>';
+
+  items.forEach((item, i) => {
+    html += `<div class="array-item" data-section="${sectionId}" data-index="${i}">
+      <div class="item-header">
+        <span class="item-number">Element ${i + 1}</span>
+        <button class="btn-remove" data-action="remove-item" data-section="${sectionId}" data-index="${i}">Fjern</button>
+      </div>`;
+
+    // Stats items
+    if ('value' in item && 'suffix' in item && 'label' in item) {
+      html += simpleInput(sectionId, i, 'value', 'Verdi', item.value, maxValue);
+      html += simpleInput(sectionId, i, 'suffix', 'Suffiks', item.suffix, 5);
+      html += simpleInput(sectionId, i, 'label', 'Etikett', item.label, maxLabel);
+      html += `<div class="field-group field-checkbox">
+        <input type="checkbox" id="raw_${sectionId}_${i}" data-section="${sectionId}" data-index="${i}" data-field="raw" ${item.raw ? 'checked' : ''}>
+        <label for="raw_${sectionId}_${i}">Rå verdi (ikke animer tall)</label>
+      </div>`;
+    }
+    // FAQ items
+    else if ('question' in item) {
+      html += simpleInput(sectionId, i, 'question', 'Spørsmål', item.question, maxQuestion);
+      html += simpleTextarea(sectionId, i, 'answer', 'Svar', item.answer, maxAnswer);
+    }
+    // Testimonial items
+    else if ('quote' in item && 'name' in item) {
+      html += simpleTextarea(sectionId, i, 'quote', 'Sitat', item.quote, maxQuote);
+      html += simpleInput(sectionId, i, 'name', 'Navn', item.name, maxName);
+      html += simpleInput(sectionId, i, 'company', 'Firma', item.company, maxCompany);
+      html += renderColorSelect(sectionId, i, item.color);
+    }
+    // Why / Service items
+    else if ('title' in item) {
+      html += simpleInput(sectionId, i, 'title', 'Tittel', item.title, maxTitle);
+      html += simpleTextarea(sectionId, i, 'body', 'Brødtekst', item.body, maxBody);
+      if ('tags' in item) {
+        html += renderTagsEditor(sectionId, i, item.tags, maxTags, maxTagLen);
+      }
+    }
+
+    html += '</div>';
+  });
+
+  if (items.length < maxItems) {
+    html += `<button class="btn-add" data-action="add-item" data-section="${sectionId}">+ Legg til</button>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function simpleInput(section, index, field, label, value, max) {
+  const plain = stripTags(value || '');
+  const pct = plain.length / max;
+  const cls = pct >= 1 ? 'over' : pct >= 0.8 ? 'warn' : '';
+  const id = `arr_${section}_${index}_${field}`;
+  let hint = '';
+  if (hasEmSupport(field)) hint = `<div class="field-hint">Bruk &lt;em&gt;...&lt;/em&gt; for uthevet gull-tekst</div>`;
+  return `<div class="field-group">
+    <label class="field-label" for="${id}">${label}</label>
+    ${hint}
+    <input class="field-input" id="${id}" data-section="${section}" data-index="${index}" data-field="${field}" data-max="${max}" type="text" value="${escAttr(value || '')}">
+    <div class="char-count ${cls}">${plain.length} / ${max}</div>
+  </div>`;
+}
+
+function simpleTextarea(section, index, field, label, value, max) {
+  const plain = stripTags(value || '');
+  const pct = plain.length / max;
+  const cls = pct >= 1 ? 'over' : pct >= 0.8 ? 'warn' : '';
+  const id = `arr_${section}_${index}_${field}`;
+  let hint = '';
+  if (hasEmSupport(field)) hint = `<div class="field-hint">Bruk &lt;em&gt;...&lt;/em&gt; for uthevet gull-tekst</div>`;
+  const rows = Math.max(2, Math.ceil(max / 80));
+  return `<div class="field-group">
+    <label class="field-label" for="${id}">${label}</label>
+    ${hint}
+    <textarea class="field-textarea" id="${id}" data-section="${section}" data-index="${index}" data-field="${field}" data-max="${max}" rows="${rows}">${escHtml(value || '')}</textarea>
+    <div class="char-count ${cls}">${plain.length} / ${max}</div>
+  </div>`;
+}
+
+function renderColorSelect(section, index, value) {
+  const colors = [
+    { val: 'var(--forest)', label: 'Skog (grønn)' },
+    { val: 'var(--gold-deep)', label: 'Gull (dyp)' },
+    { val: 'var(--forest-mid)', label: 'Skog (middels)' },
+    { val: 'var(--forest-dark)', label: 'Skog (mørk)' },
+    { val: 'var(--gold)', label: 'Gull' },
+  ];
+  let html = `<div class="field-group">
+    <label class="field-label">Farge</label>
+    <select class="field-select" data-section="${section}" data-index="${index}" data-field="color">`;
+  colors.forEach(c => {
+    html += `<option value="${c.val}" ${value === c.val ? 'selected' : ''}>${c.label}</option>`;
+  });
+  html += '</select></div>';
+  return html;
+}
+
+function renderTagsEditor(section, index, tags, maxTags, maxTagLen) {
+  let html = `<div class="field-group">
+    <label class="field-label">Tags</label>
+    <div class="tags-wrap" data-section="${section}" data-index="${index}" data-field="tags">`;
+  tags.forEach((tag, ti) => {
+    html += `<span class="tag-chip">
+      <input type="text" value="${escAttr(tag)}" data-tag-index="${ti}" maxlength="${maxTagLen}">
+      <button class="tag-remove" data-tag-index="${ti}" title="Fjern tag">&times;</button>
+    </span>`;
+  });
+  if (tags.length < maxTags) {
+    html += `<button class="btn-add" style="padding:.2rem .6rem;font-size:.75rem;" data-action="add-tag" data-section="${section}" data-index="${index}">+ Tag</button>`;
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function renderSimpleArray(sectionId, itemsObj) {
+  const values = itemsObj.values;
+  const max = itemsObj.maxItems || 20;
+  const maxLen = itemsObj.maxLength || 25;
+
+  let html = '<div class="array-section"><h3>Elementer</h3>';
+  values.forEach((val, i) => {
+    const pct = val.length / maxLen;
+    const cls = pct >= 1 ? 'over' : pct >= 0.8 ? 'warn' : '';
+    html += `<div class="array-item" style="padding:.6rem 1rem;display:flex;align-items:center;gap:.75rem;">
+      <span class="item-number" style="white-space:nowrap;">${i + 1}.</span>
+      <div style="flex:1;">
+        <input class="field-input" data-section="${sectionId}" data-simple-index="${i}" data-max="${maxLen}" type="text" value="${escAttr(val)}">
+        <div class="char-count ${cls}">${val.length} / ${maxLen}</div>
+      </div>
+      <button class="btn-remove" data-action="remove-simple" data-section="${sectionId}" data-simple-index="${i}" style="flex-shrink:0;">Fjern</button>
+    </div>`;
+  });
+  if (values.length < max) {
+    html += `<button class="btn-add" data-action="add-simple" data-section="${sectionId}">+ Legg til</button>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderSimpleArrayField(sectionId, key, obj) {
+  const items = obj.items;
+  const max = obj.maxItems || 10;
+  const maxLen = obj.maxLength || 30;
+  const labelText = key === 'trustPills' ? 'Tillits-piller' : key === 'credentials' ? 'Kvalifikasjoner' : key;
+
+  let html = `<div class="array-section"><h3>${labelText}</h3>`;
+  items.forEach((val, i) => {
+    const pct = val.length / maxLen;
+    const cls = pct >= 1 ? 'over' : pct >= 0.8 ? 'warn' : '';
+    html += `<div class="array-item" style="padding:.6rem 1rem;display:flex;align-items:center;gap:.75rem;">
+      <span class="item-number" style="white-space:nowrap;">${i + 1}.</span>
+      <div style="flex:1;">
+        <input class="field-input" data-section="${sectionId}" data-array-key="${key}" data-arr-index="${i}" data-max="${maxLen}" type="text" value="${escAttr(val)}">
+        <div class="char-count ${cls}">${val.length} / ${maxLen}</div>
+      </div>
+      <button class="btn-remove" data-action="remove-keyed" data-section="${sectionId}" data-array-key="${key}" data-arr-index="${i}" style="flex-shrink:0;">Fjern</button>
+    </div>`;
+  });
+  if (items.length < max) {
+    html += `<button class="btn-add" data-action="add-keyed" data-section="${sectionId}" data-array-key="${key}">+ Legg til</button>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderParagraphs(sectionId, paragraphs) {
+  let html = '<div class="array-section"><h3>Avsnitt</h3>';
+  paragraphs.forEach((p, i) => {
+    const max = p.max || 350;
+    const plain = stripTags(p.value || '');
+    const pct = plain.length / max;
+    const cls = pct >= 1 ? 'over' : pct >= 0.8 ? 'warn' : '';
+    html += `<div class="array-item">
+      <div class="item-header"><span class="item-number">Avsnitt ${i + 1}</span></div>
+      <div class="field-group">
+        <textarea class="field-textarea" data-section="${sectionId}" data-para-index="${i}" data-max="${max}" rows="3">${escHtml(p.value || '')}</textarea>
+        <div class="char-count ${cls}">${plain.length} / ${max}</div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+// ── Attach listeners ──
+function attachFieldListeners(container) {
+  // Value fields (path-based)
+  container.querySelectorAll('[data-path][data-key]').forEach(el => {
+    el.addEventListener('input', () => {
+      const path = el.dataset.path;
+      const key = el.dataset.key;
+      const val = el.value;
+      const parts = path.split('.');
+      let target = content;
+      for (const p of parts) target = target[p];
+      target[key].value = val;
+      updateCharCount(el);
+      markDirty();
+    });
+  });
+
+  // Array item fields
+  container.querySelectorAll('[data-section][data-index][data-field]').forEach(el => {
+    el.addEventListener('input', () => {
+      const s = el.dataset.section;
+      const i = parseInt(el.dataset.index);
+      const f = el.dataset.field;
+      if (el.tagName === 'SELECT') {
+        content[s].items[i][f] = el.value;
+      } else {
+        content[s].items[i][f] = el.value;
+      }
+      updateCharCount(el);
+      markDirty();
+    });
+    if (el.tagName === 'SELECT') {
+      el.addEventListener('change', () => {
+        content[el.dataset.section].items[parseInt(el.dataset.index)][el.dataset.field] = el.value;
+        markDirty();
+      });
+    }
+  });
+
+  // Checkboxes (raw)
+  container.querySelectorAll('[data-section][data-index][data-field="raw"]').forEach(el => {
+    if (el.type === 'checkbox') {
+      el.addEventListener('change', () => {
+        content[el.dataset.section].items[parseInt(el.dataset.index)].raw = el.checked;
+        markDirty();
+      });
+    }
+  });
+
+  // Simple array fields (industries, tools)
+  container.querySelectorAll('[data-section][data-simple-index]').forEach(el => {
+    if (el.tagName === 'INPUT') {
+      el.addEventListener('input', () => {
+        content[el.dataset.section].items.values[parseInt(el.dataset.simpleIndex)] = el.value;
+        updateCharCount(el);
+        markDirty();
+      });
+    }
+  });
+
+  // Keyed array fields (trustPills, credentials)
+  container.querySelectorAll('[data-section][data-array-key][data-arr-index]').forEach(el => {
+    if (el.tagName === 'INPUT') {
+      el.addEventListener('input', () => {
+        content[el.dataset.section][el.dataset.arrayKey].items[parseInt(el.dataset.arrIndex)] = el.value;
+        updateCharCount(el);
+        markDirty();
+      });
+    }
+  });
+
+  // Paragraph fields
+  container.querySelectorAll('[data-section][data-para-index]').forEach(el => {
+    el.addEventListener('input', () => {
+      content[el.dataset.section].bodyParagraphs[parseInt(el.dataset.paraIndex)].value = el.value;
+      updateCharCount(el);
+      markDirty();
+    });
+  });
+
+  // Tag inputs
+  container.querySelectorAll('.tags-wrap input[data-tag-index]').forEach(el => {
+    el.addEventListener('input', () => {
+      const wrap = el.closest('.tags-wrap');
+      const s = wrap.dataset.section;
+      const idx = parseInt(wrap.dataset.index);
+      const ti = parseInt(el.dataset.tagIndex);
+      content[s].items[idx].tags[ti] = el.value;
+      markDirty();
+    });
+  });
+
+  // Tag remove
+  container.querySelectorAll('.tags-wrap .tag-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wrap = btn.closest('.tags-wrap');
+      const s = wrap.dataset.section;
+      const idx = parseInt(wrap.dataset.index);
+      const ti = parseInt(btn.dataset.tagIndex);
+      content[s].items[idx].tags.splice(ti, 1);
+      markDirty();
+      renderSection(activeSection);
+    });
+  });
+
+  // Add tag
+  container.querySelectorAll('[data-action="add-tag"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content[btn.dataset.section].items[parseInt(btn.dataset.index)].tags.push('Ny tag');
+      markDirty();
+      renderSection(activeSection);
+    });
+  });
+
+  // Remove item
+  container.querySelectorAll('[data-action="remove-item"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!confirm('Fjerne dette elementet?')) return;
+      content[btn.dataset.section].items.splice(parseInt(btn.dataset.index), 1);
+      markDirty();
+      renderSection(activeSection);
+    });
+  });
+
+  // Add item
+  container.querySelectorAll('[data-action="add-item"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const s = btn.dataset.section;
+      const items = content[s].items;
+      const template = items.length > 0 ? items[0] : {};
+      const newItem = {};
+      for (const k of Object.keys(template)) {
+        if (typeof template[k] === 'string') newItem[k] = '';
+        else if (typeof template[k] === 'boolean') newItem[k] = false;
+        else if (Array.isArray(template[k])) newItem[k] = [];
+        else newItem[k] = '';
+      }
+      items.push(newItem);
+      markDirty();
+      renderSection(activeSection);
+    });
+  });
+
+  // Remove simple (industries/tools)
+  container.querySelectorAll('[data-action="remove-simple"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!confirm('Fjerne dette elementet?')) return;
+      content[btn.dataset.section].items.values.splice(parseInt(btn.dataset.simpleIndex), 1);
+      markDirty();
+      renderSection(activeSection);
+    });
+  });
+
+  // Add simple
+  container.querySelectorAll('[data-action="add-simple"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content[btn.dataset.section].items.values.push('');
+      markDirty();
+      renderSection(activeSection);
+    });
+  });
+
+  // Remove keyed
+  container.querySelectorAll('[data-action="remove-keyed"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!confirm('Fjerne dette elementet?')) return;
+      content[btn.dataset.section][btn.dataset.arrayKey].items.splice(parseInt(btn.dataset.arrIndex), 1);
+      markDirty();
+      renderSection(activeSection);
+    });
+  });
+
+  // Add keyed
+  container.querySelectorAll('[data-action="add-keyed"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content[btn.dataset.section][btn.dataset.arrayKey].items.push('');
+      markDirty();
+      renderSection(activeSection);
+    });
+  });
+}
+
+function updateCharCount(el) {
+  const max = parseInt(el.dataset.max);
+  if (!max || max >= 9999) return;
+  const counter = el.parentElement.querySelector('.char-count');
+  if (!counter) return;
+  const plain = stripTags(el.value).length;
+  const pct = plain / max;
+  counter.textContent = `${plain} / ${max}`;
+  counter.className = 'char-count' + (pct >= 1 ? ' over' : pct >= 0.8 ? ' warn' : '');
+}
+
+function markDirty() { dirty = true; }
+
+// ── Validation ──
+function validateContent() {
+  const errors = [];
+
+  function checkField(path, field) {
+    if (!field || typeof field !== 'object' || !('value' in field)) return;
+    const plain = stripTags(field.value || '');
+    if (field.max && plain.length > field.max) {
+      errors.push(`${path}: ${plain.length}/${field.max} tegn (for langt)`);
+    }
+    if (field.min && plain.length < field.min) {
+      errors.push(`${path}: ${plain.length}/${field.min} tegn (for kort)`);
+    }
+  }
+
+  function walkSection(sectionId, section) {
+    for (const [key, val] of Object.entries(section)) {
+      if (val && typeof val === 'object' && 'value' in val) {
+        checkField(`${sectionId}.${key}`, val);
+      }
+      if (key === 'items' && Array.isArray(val)) {
+        val.forEach((item, i) => {
+          for (const [ik, iv] of Object.entries(item)) {
+            if (typeof iv === 'string') {
+              const maxKey = 'max' + ik.charAt(0).toUpperCase() + ik.slice(1) + 'Length';
+              const max = section[maxKey];
+              if (max && stripTags(iv).length > max) {
+                errors.push(`${sectionId}.items[${i}].${ik}: ${stripTags(iv).length}/${max} tegn`);
+              }
+            }
+          }
+        });
+      }
+      if (key === 'card' && typeof val === 'object') {
+        for (const [ck, cv] of Object.entries(val)) checkField(`${sectionId}.card.${ck}`, cv);
+      }
+      if (key === 'badge' && typeof val === 'object') {
+        for (const [bk, bv] of Object.entries(val)) checkField(`${sectionId}.badge.${bk}`, bv);
+      }
+      if (key === 'bodyParagraphs' && Array.isArray(val)) {
+        val.forEach((p, i) => {
+          if (p.max && stripTags(p.value || '').length > p.max) {
+            errors.push(`${sectionId}.bodyParagraphs[${i}]: for langt`);
+          }
+        });
+      }
+    }
+  }
+
+  for (const s of SECTIONS) {
+    if (content[s.id]) walkSection(s.id, content[s.id]);
+  }
+
+  return errors;
+}
+
+// ── Save ──
+document.getElementById('saveBtn').addEventListener('click', async () => {
+  const errors = validateContent();
+  if (errors.length > 0) {
+    showToast('Validering feilet:\n' + errors.join('\n'), 'error');
+    return;
+  }
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.textContent = 'Lagrer...';
+  try {
+    const res = await apiFetch('/api/content', {
+      method: 'PUT',
+      body: JSON.stringify(content)
+    });
+    if (!res.ok) throw new Error('Save failed');
+    dirty = false;
+    showToast('Endringer lagret!');
+  } catch (err) {
+    if (err.message !== 'Unauthorized') showToast('Feil ved lagring', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Lagre endringer';
+  }
+});
+
+// ── Messages ──
+function renderMessages(main) {
+  if (messages.length === 0) {
+    main.innerHTML = '<h2>Meldinger</h2><div class="empty-state">Ingen meldinger ennå</div>';
+    return;
+  }
+
+  let html = '<h2>Meldinger</h2><div class="msg-list">';
+  messages.forEach(msg => {
+    const date = formatDate(msg.timestamp);
+    html += `<div class="msg-card ${msg.read ? '' : 'unread'}" data-msg-id="${msg.id}">
+      <div class="msg-header">
+        <div class="msg-meta">
+          <div class="msg-name">${escHtml(msg.navn)}</div>
+          ${msg.bedrift ? `<div class="msg-company">${escHtml(msg.bedrift)}</div>` : ''}
+        </div>
+        <div class="msg-time">${date}</div>
+      </div>
+      <div class="msg-contacts">
+        <a href="mailto:${escAttr(msg.epost)}">${escHtml(msg.epost)}</a>
+        ${msg.telefon ? `<span>${escHtml(msg.telefon)}</span>` : ''}
+      </div>
+      ${msg.behov ? `<div class="msg-behov">${escHtml(msg.behov)}</div>` : ''}
+      ${msg.melding ? `<div class="msg-body">${escHtml(msg.melding)}</div>` : ''}
+      <div class="msg-actions">
+        <button class="btn-delete" data-action="delete-msg" data-msg-id="${msg.id}">Slett</button>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  main.innerHTML = html;
+
+  // Mark unread as read on click
+  main.querySelectorAll('.msg-card.unread').forEach(card => {
+    card.addEventListener('click', async (e) => {
+      if (e.target.closest('.btn-delete') || e.target.closest('a')) return;
+      const id = card.dataset.msgId;
+      try {
+        await apiFetch(`/api/messages/${id}`, { method: 'PATCH' });
+        const msg = messages.find(m => m.id === id);
+        if (msg) msg.read = true;
+        card.classList.remove('unread');
+        buildSidebar();
+      } catch {}
+    });
+  });
+
+  // Delete
+  main.querySelectorAll('[data-action="delete-msg"]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Er du sikker på at du vil slette denne meldingen?')) return;
+      const id = btn.dataset.msgId;
+      try {
+        await apiFetch(`/api/messages/${id}`, { method: 'DELETE' });
+        messages = messages.filter(m => m.id !== id);
+        buildSidebar();
+        renderMessages(main);
+        showToast('Melding slettet');
+      } catch {}
+    });
+  });
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  const months = ['jan.','feb.','mars','april','mai','juni','juli','aug.','sept.','okt.','nov.','des.'];
+  const day = d.getDate();
+  const month = months[d.getMonth()];
+  const year = d.getFullYear();
+  const h = String(d.getHours()).padStart(2, '0');
+  const m = String(d.getMinutes()).padStart(2, '0');
+  return `${day}. ${month} ${year}, ${h}:${m}`;
+}
+
+// ── Helpers ──
+function escHtml(s) {
+  const div = document.createElement('div');
+  div.textContent = s || '';
+  return div.innerHTML;
+}
+function escAttr(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Init ──
+if (getToken()) {
+  showAdmin();
+} else {
+  showLogin();
+}
+
+})();
+</script>
+</body>
+</html>

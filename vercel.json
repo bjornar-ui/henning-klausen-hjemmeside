@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "admin/**", "use": "@vercel/static" },
+    { "src": "data/**", "use": "@vercel/static" },
+    { "src": "*.mp4", "use": "@vercel/static" },
+    { "src": "*.png", "use": "@vercel/static" },
+    { "src": "robots.txt", "use": "@vercel/static" },
+    { "src": "sitemap.xml", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/robots.txt", "dest": "/robots.txt" },
+    { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
+    { "src": "/api/(.*)", "dest": "server.js" },
+    { "src": "/admin/forside", "dest": "/admin/forside/index.html" },
+    { "src": "/admin/?$", "dest": "/admin/index.html" },
+    { "src": "/(.*\\.mp4)", "dest": "/$1" },
+    { "src": "/(.*\\.png)", "dest": "/$1" },
+    { "src": "/", "dest": "/index.html" }
+  ]
+}
