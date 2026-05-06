@@ -161,6 +161,15 @@
       "screenWidth": 2560,
       "duration": 93,
       "scrollDepth": 100
+    },
+    {
+      "date": "2026-05-06",
+      "timestamp": "2026-05-06T00:53:18.204Z",
+      "page": "/",
+      "referrer": "",
+      "screenWidth": 2560,
+      "duration": 742,
+      "scrollDepth": 100
     }
   ],
   "events": [
