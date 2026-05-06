@@ -130,7 +130,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+html { scroll-padding-top: 80px; }
 
 body {
   font-family: 'Manrope', system-ui, sans-serif;
@@ -324,7 +324,8 @@ a, button, [role="button"], .cred, .tool-chip, .testi, .direct-card, .service {
   object-fit: cover; object-position: center;
 }
 #hero-intro { z-index: 1; }
-#hero-loop { z-index: 0; }
+#hero-loop { z-index: 0; visibility: hidden; }
+#hero-loop.active { visibility: visible; }
 
 /* Scrim — gradient on right for text readability */
 .hero-scrim {
@@ -1352,6 +1353,7 @@ footer::before {
   html { scroll-behavior: auto; }
 }
 </style>
+<script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
 </head>
 <body>
 
@@ -1975,6 +1977,11 @@ footer::before {
 </button>
 
 <script>
+/* ── Lenis smooth scroll ── */
+const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
 /* ── Intro splash → video intro (reversed) → loop ── */
 (function() {
   const splash = document.getElementById('intro-splash');
@@ -1989,22 +1996,25 @@ footer::before {
 
   /* Start intro video + splash text together */
   introVid.play().catch(() => {
+    loop.classList.add('active');
     introVid.style.display = 'none';
     hero.classList.add('ready');
     splash.classList.add('fade-out');
     setTimeout(() => splash.classList.add('hidden'), 1200);
   });
 
-  /* When intro ends — just remove it. Loop is already playing behind. */
+  /* When intro ends — reveal loop, remove intro */
   introVid.addEventListener('ended', () => {
+    loop.classList.add('active');
     introVid.style.display = 'none';
     splash.classList.add('fade-out');
     setTimeout(() => splash.classList.add('hidden'), 1200);
     hero.classList.add('ready');
   });
 
-  /* Fallback: if intro fails to load, loop is already playing */
+  /* Fallback: if intro fails to load */
   introVid.addEventListener('error', () => {
+    loop.classList.add('active');
     introVid.style.display = 'none';
     hero.classList.add('ready');
   });
@@ -2014,6 +2024,7 @@ footer::before {
     if (splash.classList.contains('fade-out')) return;
     splash.classList.add('fade-out');
     setTimeout(() => splash.classList.add('hidden'), 800);
+    loop.classList.add('active');
     introVid.pause();
     introVid.style.display = 'none';
     hero.classList.add('ready');
